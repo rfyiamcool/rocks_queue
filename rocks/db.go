@@ -16,6 +16,17 @@ type DB struct {
 	caches *lru.Cache
 }
 
+func NewRocksDB(dir string) *gorocksdb.DB {
+	opts := gorocksdb.NewDefaultOptions()
+	opts.SetCreateIfMissing(true)
+	rdb, err := gorocksdb.OpenDb(opts, dir)
+	if err != nil {
+		panic(err)
+	}
+
+	return rdb
+}
+
 func New(rdb *gorocksdb.DB) *DB {
 	db := &DB{rdb: rdb}
 	db.wo = gorocksdb.NewDefaultWriteOptions()

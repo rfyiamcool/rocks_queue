@@ -2,28 +2,16 @@ package main
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/rfyiamcool/rocks_queue/rocks"
-	"github.com/tecbot/gorocksdb"
 )
-
-func newRocksDB(dir string) *rocks.DB {
-	opts := gorocksdb.NewDefaultOptions()
-	opts.SetCreateIfMissing(true)
-	rdb, err := gorocksdb.OpenDb(opts, dir)
-	if err != nil {
-		panic(err)
-	}
-
-	return rocks.New(rdb)
-}
 
 func main() {
 	var err error
 	var res []byte
 
-	db := newRocksDB("./rocks_6380")
+	rocksdb := rocks.NewRocksDB("./rocks_data")
+	db := rocks.New(rocksdb)
 	defer db.Close()
 
 	fmt.Println("start...")
@@ -39,7 +27,5 @@ func main() {
 		fmt.Println(string(res), err)
 	}
 
-	l.Range(28, 35, func(i int, value []byte, quit *bool) {
-		log.Fatal(i, string(value))
-	})
+	fmt.Printf("queue length: %d \n", l.Len())
 }
