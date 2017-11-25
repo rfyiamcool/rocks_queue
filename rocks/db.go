@@ -56,16 +56,12 @@ func (d *DB) objFromCache(key []byte, e ElementType) interface{} {
 	return obj
 }
 
-func (d *DB) Hash(key []byte) *HashElement {
-	return d.objFromCache(key, HASH).(*HashElement)
-}
+// func (d *DB) Hash(key []byte) *HashElement {
+// 	return d.objFromCache(key, HASH).(*HashElement)
+// }
 
 func (d *DB) List(key []byte) *ListElement {
 	return d.objFromCache(key, LIST).(*ListElement)
-}
-
-func (d *DB) SortedSet(key []byte) *SortedSetElement {
-	return d.objFromCache(key, SORTEDSET).(*SortedSetElement)
 }
 
 func (d *DB) Delete(key []byte) error {
