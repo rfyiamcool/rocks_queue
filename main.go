@@ -14,18 +14,19 @@ func main() {
 	db := rocks.New(rocksdb)
 	defer db.Close()
 
-	fmt.Println("start...")
+	l := db.List([]byte("qq"))
 
-	l := db.List([]byte("list"))
-
-	for index := 0; index < 10000; index++ {
+	for index := 0; index < 10; index++ {
 		l.RPush([]byte(fmt.Sprintf("xiaorui.cc index: %d", index)))
 	}
 
+	fmt.Printf("queue length: %d \n", l.Len())
+
 	for index := 0; index < 1; index++ {
 		res, err = l.LPop()
-		fmt.Println(string(res), err)
+		fmt.Printf("LPOP value: %v, err: %v \n", string(res), err)
 	}
 
 	fmt.Printf("queue length: %d \n", l.Len())
+	l.Drop()
 }

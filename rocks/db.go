@@ -56,10 +56,6 @@ func (d *DB) objFromCache(key []byte, e ElementType) interface{} {
 	return obj
 }
 
-// func (d *DB) Hash(key []byte) *HashElement {
-// 	return d.objFromCache(key, HASH).(*HashElement)
-// }
-
 func (d *DB) List(key []byte) *ListElement {
 	return d.objFromCache(key, LIST).(*ListElement)
 }
@@ -80,6 +76,10 @@ func (d *DB) TypeOf(key []byte) ElementType {
 
 func (d *DB) Get(key []byte) ([]byte, error) {
 	return d.RawGet(rawKey(key, STRING))
+}
+
+func (d *DB) GetList(key []byte) ([]byte, error) {
+	return d.RawGet(rawKey(key, LIST))
 }
 
 func (d *DB) Set(key, value []byte) error {

@@ -3,9 +3,9 @@ package rocks
 import (
 	"bytes"
 	"errors"
-	"github.com/tecbot/gorocksdb"
-	// "log"
 	"sync"
+
+	"github.com/tecbot/gorocksdb"
 )
 
 // list
@@ -67,7 +67,7 @@ func (l *ListElement) RPush(vals ...[]byte) error {
 	x, y := l.leftIndex(), l.rightIndex()
 	if x == 0 && y == -1 {
 		// empty
-		batch.Put(l.rawKey(), nil)
+		batch.Put(l.rawKey(), KEY_EXIST)
 	}
 
 	for i, val := range vals {
@@ -140,13 +140,33 @@ func (l *ListElement) pop(left bool) ([]byte, error) {
 }
 
 func (l *ListElement) Drop() error {
-	l.drop()
-	return nil
+	return l.drop()
+}
+
+// move out side
+func (l *ListElement) Exist() (bool, error) {
+	res, err := l.db.GetList(l.key)
+
+	if string(res) == "" || err != nil {
+		return false, err
+	}
+	return true, err
 }
 
 func (l *ListElement) drop() error {
 	l.mu.Lock()
 	defer l.mu.Unlock()
+
+	var err error
+	var ok bool
+
+	ok, err = l.Exist()
+	if !ok {
+		return errors.New("not found")
+	}
+	if err != nil {
+		return err
+	}
 
 	batch := gorocksdb.NewWriteBatch()
 	defer batch.Destroy()
@@ -156,7 +176,7 @@ func (l *ListElement) drop() error {
 	})
 	batch.Delete(l.rawKey())
 
-	err := l.db.WriteBatch(batch)
+	err = l.db.WriteBatch(batch)
 	if err == nil {
 		l.db = nil
 	}
@@ -194,13 +214,7 @@ func (l *ListElement) rightIndex() int64 {
 
 // +key,l = ""
 func (l *ListElement) rawKey() []byte {
-	// this is ...
 	return rawKey(l.key, LIST)
-}
-
-func (l *ListElement) kkk() int {
-	var a = 123
-	return a
 }
 
 // l[key]
