@@ -64,6 +64,10 @@ func (d *DB) FLushAll() {
 
 }
 
+func (d *DB) Keys() {
+
+}
+
 func (d *DB) Delete(key []byte) error {
 	return d.RawDelete(key)
 }

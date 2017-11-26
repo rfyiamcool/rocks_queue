@@ -9,10 +9,10 @@ import (
 )
 
 // list
-// +key,l = ""
-// l[key]0 = "a"
-// l[key]1 = "b"
-// l[key]2 = "c"
+// +keyName,l = ""
+// l[keyName]0 = "a"
+// l[keyName]1 = "b"
+// l[keyName]2 = "c"
 type ListElement struct {
 	db  *DB
 	key []byte
@@ -212,17 +212,17 @@ func (l *ListElement) rightIndex() int64 {
 	return idx
 }
 
-// +key,l = ""
+// +keyName,l = ""
 func (l *ListElement) rawKey() []byte {
 	return rawKey(l.key, LIST)
 }
 
-// l[key]
+// l[keyName]
 func (l *ListElement) keyPrefix() []byte {
 	return bytes.Join([][]byte{[]byte{LIST}, SOK, l.key, EOK}, nil)
 }
 
-// l[key]0 = "a"
+// l[keyName]0 = "a"
 func (l *ListElement) indexKey(i int64) []byte {
 	sign := []byte{0}
 	if i >= 0 {

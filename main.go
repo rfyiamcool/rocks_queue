@@ -28,5 +28,5 @@ func main() {
 	}
 
 	fmt.Printf("queue length: %d \n", l.Len())
-	l.Drop()
+	// l.Drop()
 }

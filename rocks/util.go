@@ -6,10 +6,6 @@ import (
 	"math"
 )
 
-// Raw key:
-// +key,type = value
-// +name,s = "latermoon"
-
 var (
 	SEP = []byte{','}
 	KEY = []byte{'+'} // Key Prefix
@@ -37,6 +33,8 @@ func (e ElementType) String() string {
 		return "list"
 	case 'z':
 		return "sortedset"
+	case 'e':
+		return "set" // not design
 	default:
 		return "none"
 	}
