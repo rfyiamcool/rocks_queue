@@ -60,8 +60,12 @@ func (d *DB) List(key []byte) *ListElement {
 	return d.objFromCache(key, LIST).(*ListElement)
 }
 
+func (d *DB) FLushAll() {
+
+}
+
 func (d *DB) Delete(key []byte) error {
-	return nil
+	return d.RawDelete(key)
 }
 
 func (d *DB) TypeOf(key []byte) ElementType {
