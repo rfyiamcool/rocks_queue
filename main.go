@@ -28,5 +28,9 @@ func main() {
 	}
 
 	fmt.Printf("queue length: %d \n", l.Len())
+
+	for _, v := range db.Keys() {
+		fmt.Printf("has key name: %s\n", v)
+	}
 	// l.Drop()
 }

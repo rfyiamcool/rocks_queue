@@ -79,3 +79,11 @@ func Int64ToBytes(i int64) []byte {
 func BytesToInt64(buf []byte) int64 {
 	return int64(binary.BigEndian.Uint64(buf))
 }
+
+func SplitKeyName(key []byte) (string, string) {
+	k := string(key)
+	length := len(key)
+	okString := string(k[1 : length-2])
+	ttype := string(k[length-1 : length])
+	return okString, ttype
+}

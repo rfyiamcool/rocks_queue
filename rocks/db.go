@@ -2,9 +2,10 @@ package rocks
 
 import (
 	"bytes"
+	"sync"
+
 	"github.com/golang/groupcache/lru"
 	"github.com/tecbot/gorocksdb"
-	"sync"
 )
 
 // rocks.DB provide "RedisLike's" rocksdb operators
@@ -61,11 +62,20 @@ func (d *DB) List(key []byte) *ListElement {
 }
 
 func (d *DB) FLushAll() {
-
+	// delete all
 }
 
-func (d *DB) Keys() {
+func (d *DB) Keys() []string {
+	keyList := []string{}
+	batch := gorocksdb.NewWriteBatch()
+	defer batch.Destroy()
 
+	d.PrefixEnumerate(KEY, IterForward, func(i int, key, value []byte, quit *bool) {
+		keyName, _ := SplitKeyName(key)
+		keyList = append(keyList, keyName)
+	})
+
+	return keyList
 }
 
 func (d *DB) Delete(key []byte) error {
