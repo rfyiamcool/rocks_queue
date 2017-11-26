@@ -1,0 +1,43 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "mrz/kicZiUaHxkyfvC/DyQcr8Do=",
+			"path": "github.com/davecgh/go-spew/spew",
+			"revision": "ecdeabc65495df2dec95d7c4a4c3e021903035e5",
+			"revisionTime": "2017-10-02T20:02:53Z"
+		},
+		{
+			"checksumSHA1": "DSKGn08DPp1+9p1xdwoVQY0IuV4=",
+			"path": "github.com/facebookgo/ensure",
+			"revision": "b4ab57deab51ee655ae4bd85281f0715a068016d",
+			"revisionTime": "2016-01-27T19:34:07Z"
+		},
+		{
+			"checksumSHA1": "R7YqZ9k/RtXzCqV9cPMmsfe4oX8=",
+			"path": "github.com/facebookgo/stack",
+			"revision": "751773369052141c013c6e827a71e8f35c07879c",
+			"revisionTime": "2016-02-09T18:44:15Z"
+		},
+		{
+			"checksumSHA1": "Wk4dPOjYwppJZJU5XXe5RZL6Mjc=",
+			"path": "github.com/facebookgo/subset",
+			"revision": "8dac2c3c48703541e481feddf22975953d4ff842",
+			"revisionTime": "2015-06-12T18:29:17Z"
+		},
+		{
+			"checksumSHA1": "nbCxiVT48CWEg6l8L4SEJ5VfN9c=",
+			"path": "github.com/golang/groupcache/lru",
+			"revision": "84a468cf14b4376def5d68c722b139b881c450a4",
+			"revisionTime": "2017-11-01T20:31:31Z"
+		},
+		{
+			"checksumSHA1": "qOnUqTZzK54UQJV+EazBKpHPb3M=",
+			"path": "github.com/tecbot/gorocksdb",
+			"revision": "15d5431583170b15f738a3e67ade13749f458058",
+			"revisionTime": "2017-11-09T10:46:38Z"
+		}
+	],
+	"rootPath": "github.com/rfyiamcool/rocks_queue"
+}
