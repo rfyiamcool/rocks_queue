@@ -1,6 +1,21 @@
 # rocks_queue
 
-使用rocksdb实现的高性能队列.
+使用rocksdb实现的高性能队列, 可引用到项目中使用.
+
+### 怎么用
+
+安装rocksdb存储引擎
+
+```
+https://github.com/facebook/rocksdb/blob/master/INSTALL.md
+```
+
+运行
+
+```
+git clone git@github.com:rfyiamcool/rocks_queue.git
+go run main.go
+```
 
 ### 改进
 
@@ -9,14 +24,26 @@
 
 ### 数据结构
 
+表明类型为list队列
+
 ```
-			key                                 value
-l[list]\x01\x00\x00\x00\x00\x00\x00\x03   xiaorui.cc index: 945
-l[list]\x01\x00\x00\x00\x00\x00\x00\x03   xiaorui.cc index: 946
-l[list]\x01\x00\x00\x00\x00\x00\x00\x03   xiaorui.cc index: 947
-l[list]\x01\x00\x00\x00\x00\x00\x00\x03   xiaorui.cc index: 948
-l[list]\x01\x00\x00\x00\x00\x00\x00\x03   xiaorui.cc index: 949
-l[list]\x01\x00\x00\x00\x00\x00\x00\x03   xiaorui.cc index: 950
+		key                                               value
+
+		+queue_name,l                                       1
+```
+
+
+list数据存储格式
+
+```
+			key                                         value
+
+l[queue_name]\x01\x00\x00\x00\x00\x00\x00\x03   xiaorui.cc index: 945
+l[queue_name]\x01\x00\x00\x00\x00\x00\x00\x03   xiaorui.cc index: 946
+l[queue_name]\x01\x00\x00\x00\x00\x00\x00\x03   xiaorui.cc index: 947
+l[queue_name]\x01\x00\x00\x00\x00\x00\x00\x03   xiaorui.cc index: 948
+l[queue_name]\x01\x00\x00\x00\x00\x00\x00\x03   xiaorui.cc index: 949
+l[queue_name]\x01\x00\x00\x00\x00\x00\x00\x03   xiaorui.cc index: 950
 
 ```
 
