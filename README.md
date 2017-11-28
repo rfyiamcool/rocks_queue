@@ -20,17 +20,17 @@ go run main.go
 ### 改进
 
 * 增加更多的redis指令.
+* 收敛代码, 去除其他的数据结构.
 
 ### 数据结构
 
 表明类型为list队列
 
 ```
-		key                                               value
+    key                               value
 
-		+queue_name,l                                       1
++queue_name,l                           1
 ```
-
 
 list数据存储格式
 
