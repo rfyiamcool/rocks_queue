@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/rfyiamcool/rocks_queue/rocks"
 )
@@ -16,9 +17,12 @@ func main() {
 
 	l := db.List([]byte("qq"))
 
-	for index := 0; index < 10; index++ {
+	pushTs := time.Now()
+	for index := 0; index < 1000000; index++ {
 		l.RPush([]byte(fmt.Sprintf("xiaorui.cc index: %d", index)))
 	}
+
+	fmt.Printf("push cost time: %v", time.Since(pushTs))
 
 	fmt.Printf("queue length: %d \n", l.Len())
 

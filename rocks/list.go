@@ -5,6 +5,7 @@ import (
 	"errors"
 	"sync"
 
+	"github.com/rfyiamcool/rocks_queue/libs/counter"
 	"github.com/tecbot/gorocksdb"
 )
 
@@ -14,13 +15,20 @@ import (
 // l[keyName]1 = "b"
 // l[keyName]2 = "c"
 type ListElement struct {
-	db  *DB
-	key []byte
-	mu  sync.RWMutex
+	db       *DB
+	key      []byte
+	mu       sync.RWMutex
+	isScaned bool
+	left     counter.Counter
+	right    counter.Counter
 }
 
 func NewListElement(db *DB, key []byte) *ListElement {
-	return &ListElement{db: db, key: key}
+	dao := &ListElement{db: db, key: key}
+	dao.left = counter.Counter(dao.leftIndex())
+	dao.right = counter.Counter(dao.rightIndex())
+	dao.isScaned = true
+	return dao
 }
 
 func (l *ListElement) Range(start, stop int, fn func(i int, value []byte, quit *bool)) error {
@@ -70,8 +78,9 @@ func (l *ListElement) RPush(vals ...[]byte) error {
 		batch.Put(l.rawKey(), KEY_EXIST)
 	}
 
-	for i, val := range vals {
-		batch.Put(l.indexKey(y+int64(i)+1), val)
+	for _, val := range vals {
+		batch.Put(l.indexKey(l.right.Incr(1)), val)
+		// batch.Put(l.indexKey(y+int64(i)+1), val)
 	}
 	return l.db.WriteBatch(batch)
 }
@@ -89,8 +98,9 @@ func (l *ListElement) LPush(vals ...[]byte) error {
 		batch.Put(l.rawKey(), nil)
 	}
 
-	for i, val := range vals {
-		batch.Put(l.indexKey(x-int64(i)-1), val)
+	for _, val := range vals {
+		// batch.Put(l.indexKey(x-int64(i)-1), val)
+		batch.Put(l.indexKey(l.left.Decr(1)), val)
 	}
 	return l.db.WriteBatch(batch)
 }
@@ -195,6 +205,9 @@ func (l *ListElement) len() int64 {
 }
 
 func (l *ListElement) leftIndex() int64 {
+	if l.isScaned {
+		return l.left.Count()
+	}
 	idx := int64(0) // default 0
 	l.db.PrefixEnumerate(l.keyPrefix(), IterForward, func(i int, key, value []byte, quit *bool) {
 		idx = l.indexInKey(key)
@@ -204,6 +217,9 @@ func (l *ListElement) leftIndex() int64 {
 }
 
 func (l *ListElement) rightIndex() int64 {
+	if l.isScaned {
+		return l.right.Count()
+	}
 	idx := int64(-1) // default -1
 	l.db.PrefixEnumerate(l.keyPrefix(), IterBackward, func(i int, key, value []byte, quit *bool) {
 		idx = l.indexInKey(key)
