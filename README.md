@@ -19,7 +19,6 @@ go run main.go
 
 ### 改进
 
-* 计数改为内存计数，只在启动初始化时会扫描一次left、right
 * 增加更多的redis指令.
 
 ### 数据结构
@@ -52,13 +51,19 @@ l[queue_name]\x01\x00\x00\x00\x00\x00\x00\x03   xiaorui.cc index: 950
 push queue
 
 ```
-75000 qps
+190000 qps
 ```
 
 pop queue
 
 ```
-68000 qps
+188000 qps
 ```
 
-参考了约炮神器陌陌 { GoRedis半成品代码 }
+### ChangeLog
+
+* v1.0 2017-11-28
+
+计数改为内存计数，只在启动初始化时会扫描一次left、right
+
+*参考了约炮神器陌陌 { GoRedis半成品代码 }*
