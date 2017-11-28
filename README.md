@@ -10,10 +10,11 @@
 https://github.com/facebook/rocksdb/blob/master/INSTALL.md
 ```
 
-运行
+运行例子
 
 ```
 git clone git@github.com:rfyiamcool/rocks_queue.git
+cd rocks_queue
 go run main.go
 ```
 
@@ -35,7 +36,7 @@ go run main.go
 list数据存储格式
 
 ```
-			key                                         value
+                key                                    value
 
 l[queue_name]\x01\x00\x00\x00\x00\x00\x00\x03   xiaorui.cc index: 945
 l[queue_name]\x01\x00\x00\x00\x00\x00\x00\x03   xiaorui.cc index: 946
