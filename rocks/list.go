@@ -157,7 +157,7 @@ func (l *ListElement) Drop() error {
 func (l *ListElement) Exist() (bool, error) {
 	res, err := l.db.GetList(l.key)
 
-	if string(res) == "" || err != nil {
+	if Bytes2str(res) == "" || err != nil {
 		return false, err
 	}
 	return true, err

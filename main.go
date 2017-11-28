@@ -36,5 +36,6 @@ func main() {
 	for _, v := range db.Keys() {
 		fmt.Printf("has key name: %s\n", v)
 	}
-	// l.Drop()
+
+	l.Drop()
 }

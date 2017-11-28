@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/binary"
 	"math"
+	"unsafe"
 )
 
 var (
@@ -86,4 +87,14 @@ func SplitKeyName(key []byte) (string, string) {
 	okString := string(k[1 : length-2])
 	ttype := string(k[length-1 : length])
 	return okString, ttype
+}
+
+func Str2bytes(s string) []byte {
+	ptr := (*[2]uintptr)(unsafe.Pointer(&s))
+	btr := [3]uintptr{ptr[0], ptr[1], ptr[1]}
+	return *(*[]byte)(unsafe.Pointer(&btr))
+}
+
+func Bytes2str(b []byte) string {
+	return *(*string)(unsafe.Pointer(&b))
 }
