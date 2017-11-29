@@ -31,6 +31,10 @@ func NewListElement(db *DB, key []byte) *ListElement {
 	return dao
 }
 
+func (l *ListElement) Ltrim(start, stop int) error {
+	return nil
+}
+
 func (l *ListElement) Range(start, stop int, fn func(i int, value []byte, quit *bool)) error {
 	l.mu.RLock()
 	defer l.mu.RUnlock()
